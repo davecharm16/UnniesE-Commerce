@@ -23,10 +23,162 @@ var sideFeature = [
 ];
 
 var viewProduct;
+const showDialog = () => {
+    const scrollY = document.documentElement.style.getPropertyValue('--scroll-y');
+    const body = document.body;
+    body.style.position = 'fixed';
+    body.style.width = '100%';
+    body.style.top = `-${scrollY}`;
+    $('.log-modal').css("margin-top", `${scrollY}`);
+};
+const closeDialog = () => {
+    const body = document.body;
+    const scrollY = body.style.top;
+    body.style.position = '';
+    body.style.top = '';
+    window.scrollTo(0, parseInt(scrollY || '0') * -1);
+    // document.getElementById('dialog').classList.remove('show');
+}
+window.addEventListener('scroll', () => {
+    document.documentElement.style.setProperty('--scroll-y', `${window.scrollY}px`);
+});
+
+function logIn() {
+    setTimeout(function() {
+        let logIn;
+        if (localStorage.getItem('logIn') === null) {
+            localStorage.setItem('logIn', 'false');
+        } else {
+            logIn = JSON.parse(localStorage.getItem('logIn'));
+        }
+        logIn = JSON.parse(localStorage.getItem('logIn'));
+        if (logIn === false) {
+            $('.log-container').hide();
+            $('.log-modal').addClass("log-show");
+            showDialog();
+            displaySignIn();
+        } else {
+            $('.log-modal').hide("slow");
+            closeDialog();
+        }
+    }, 1000);
+}
+
+function Questions(question, name, type, placeholder) {
+    this.question = question;
+    this.name = name;
+    this.type = type;
+    this.placeholder = placeholder;
+}
+
+function UserPass(prompt, name, type, placeholder) {
+    this.prompt = prompt;
+    this.name = name;
+    this.type = type;
+    this.placeholder = placeholder;
+}
+questions = [
+    new Questions("What is your full name ?", "name", "text", "Enter your name"),
+    new Questions("What is your Address ?", "address", "text", "Enter your address"),
+    new Questions("What is your Phone Number", "phone", "number", "Enter your phone number"),
+    new Questions("What is your E-mail", "email", "email", "Enter your E-mail"),
+    new Questions("Type your Username", "username", "text", "Enter your Username"),
+    new Questions("Type Your Password", "password", "password", "Enter your Password"),
+]
 
 
 
+var s = 0;
 
+function validateEmail(email) {
+    const re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(email);
+}
+
+function displaySignIn() {
+    $('.s').click(function() {
+        displayLogIn();
+    });
+    if (s === 0) {
+        $('.back').addClass("back-dead");
+    }
+    $('.sign-container').slideDown("slow").css("display", "flex");
+    $('.next').click(function() {
+        var x = $('.input-sign').val();
+        if (x === "" && s <= 5) {
+            s = s;
+            alert("Enter Value on the Input Field");
+        } else if (s === 3 && !validateEmail(x)) {
+            s = s;
+            alert("Enter Valid Email");
+        } else if (s < 6) {
+            localStorage.setItem(`${questions[s].name}`, `${JSON.stringify(x)}`);
+            $('.input-sign').val("");
+            s += 1;
+        }
+
+        if (s == 6) {
+            $('.sign-container').slideUp("slow").hide();
+            displayConfirmation();
+        } else {
+            console.log(s);
+            displayQuest(s);
+            $('.set-up').text(`Set up your Account. ${s+1}/6`);
+            $('.sign-container').slideDown("slow").css("display", "flex");
+        }
+
+
+    });
+    $('.back').click(function() {
+        s -= 1;
+        displayQuest(s);
+        $('.set-up').text(`Set up your Account. ${s+1}/6`);
+        $('.sign-container').slideDown("slow").css("display", "flex");
+    });
+}
+
+
+function displayLogIn() {
+    $('.confirmation').slideUp("slow").hide();
+    $('.sign-container').slideUp("slow").hide();
+    $('.log-container').slideDown("slow").css("display", "flex");
+    $('.in-out').children().remove();
+}
+$('.log-next').click(function() {
+    window.location.href = "index.html";
+    localStorage.setItem('logIn', 'true');
+});
+
+function displayConfirmation() {
+    $('.confirmation').slideDown("slow").css("display", "flex");
+    $('.log-in').click(function() {
+        displayLogIn();
+    });
+}
+
+function displayQuest(s) {
+    if (s === 0) {
+        $('.back').addClass("back-dead");
+    } else {
+        $('.back').removeClass("back-dead");
+    }
+    if (s === 5) {
+        $('.next').text('Sign Up').attr("type", "submit");
+    } else {
+        $('.next').text('Next');
+    }
+
+    $('.set-up').text(`Set up your Account. ${s+1}/6`);
+    $('.sign-container').slideUp("fast");
+
+    $('.set-up').text(`Set up your account. ${s}/6`);
+    $('.question').text(questions[s].question);
+    $(".input-sign").attr({
+        type: `${questions[s].type}`,
+        name: `${questions[s].name}`,
+        placeholder: `${questions[s].placeholder}`,
+    });
+}
 
 var carouselBox = $('.carousel-box');
 for (let i = 0; i < featured.length; i++) {
@@ -262,7 +414,7 @@ function selectedProduct() {
 }
 
 
-updateContent();
+$('.products-html').ready(function() { updateContent(); });
 
 function updateContent() {
     selectedValue = select.val();
@@ -467,6 +619,7 @@ function createVariation(place, variation) {
 
 }
 
+
 function addQty(item) {
     var qty = $('.quantity').text();
     qty = parseInt(qty, 10);
@@ -488,3 +641,264 @@ function minQty(item) {
     item.qty = qty;
     localStorage.setItem('view', JSON.stringify(item));
 }
+
+
+function getItemCart() {
+    let cart;
+    if (localStorage.getItem('cart') === null) {
+        localStorage.setItem('cart', '[]');
+        cart = JSON.parse(localStorage.getItem('cart'));
+    } else {
+        cart = JSON.parse(localStorage.getItem('cart'));
+    }
+    var cartHolder = $('.shopping-cart');
+    if (cart.length == 0) {
+        cartHolder.append(`
+            <h1>No Items Yet</h1>
+        `);
+    } else {
+        cartHolder.remove("h1");
+        for (let x = 0; x < cart.length; x++) {
+            cartHolder.append(
+                `
+                <div class="cart-item">
+                <div class="item-desc">
+                    <input type="checkbox" name="select" class="sel">
+                    <div class="item-pic"><img src="${cart[x].gallery[0]}"></div>
+                    <div class="cart-item-name">${cart[x].name}</div>
+                </div>
+                <div class="unit-price">₱${cart[x].price}</div>
+                <div class="unit-quantity">
+                    <div class="q-button">
+                        <button class="op minus-cart">-</button>
+                        <div class="quantity">${cart[x].qty}</div>
+                        <button class="op plus-cart">+</button>
+                    </div>
+                </div>
+                <div class="total-price">₱${cart[x].price*cart[x].qty}</div>
+                <div class="remove">Delete</div>
+            </div>
+                `
+            );
+        }
+    }
+    $('.plus-cart').click(function() {
+        item = cart[$(this).parent().parent().parent().index()]
+        item.qty += 1;
+        // $('.quantity').text(item.qty);
+        // $('.total-price').text(`₱${item.price*item.qty}`);
+        $('.cart-item').eq($(this).parent().parent().parent().index()).find('.quantity').text(item.qty);
+        $('.cart-item').eq($(this).parent().parent().parent().index()).find('.total-price').text(`₱${item.price*item.qty}`);
+        items = JSON.parse(localStorage.getItem('cart'));
+        items[$(this).parent().parent().parent().index()] = item;
+        localStorage.setItem('cart', JSON.stringify(items));
+        collectOrder();
+    });
+    $('.minus-cart').click(function() {
+        item = cart[$(this).parent().parent().parent().index()]
+        if (item.qty == 1) {
+            item.qty = 1;
+        } else {
+            item.qty -= 1;
+        }
+        // $('.quantity').text(item.qty);
+        // $('.total-price').text(`₱${item.price*item.qty}`);
+        $('.cart-item').eq($(this).parent().parent().parent().index()).find('.quantity').text(item.qty);
+        $('.cart-item').eq($(this).parent().parent().parent().index()).find('.total-price').text(`₱${item.price*item.qty}`);
+        items = JSON.parse(localStorage.getItem('cart'));
+        items[$(this).parent().parent().parent().index()] = item;
+        localStorage.setItem('cart', JSON.stringify(items));
+        collectOrder();
+    });
+
+    $('input[name="select"').click(function() {
+        collectOrder();
+    });
+
+    $('.remove').click(function() {
+        deleteItem($(this).parent().index());
+    });
+}
+
+
+$('#select-all').click(function() {
+    if ($(this).is(":checked")) {
+        checkAllItems();
+    } else {
+        uncheckAllItems();
+    }
+    collectOrder();
+});
+
+function deleteItem(index) {
+    console.log($('.cart-item').eq(index));
+    cart = JSON.parse(localStorage.getItem('cart'));
+    cart.splice(index, 1);
+    $('.cart-item').eq(index).slideUp("slow");
+    setTimeout(function() {
+        $('.cart-item').eq(index).remove();
+        localStorage.setItem('cart', JSON.stringify(cart));
+        collectOrder();
+    }, 800);
+
+}
+
+function checkAllItems() {
+    var items = $('.cart-item');
+    items.find($('input[name="select"]').prop("checked", true));
+}
+
+function uncheckAllItems() {
+    var items = $('.cart-item');
+    items.find($('input[name="select"]').prop("checked", false));
+}
+
+
+function collectOrder() {
+    cart = JSON.parse(localStorage.getItem('cart'));
+    order = [];
+    items = $('.cart-item');
+    total = 0;
+    for (let x = 0; x < items.length; x++) {
+        if (items.eq(x).find($('input[name="select"]')).is(":checked")) {
+            order.push(cart[x]);
+            total += (cart[x].qty * cart[x].price);
+        }
+    }
+    setOrder(order);
+    $('.sub-total').text(`₱${total}`);
+}
+
+function setOrder(order) {
+    if (localStorage.getItem('order') === null) {
+        localStorage.setItem('order', '[]');
+    }
+    localStorage.setItem('order', JSON.stringify(order));
+}
+
+//Profile
+
+function getProfile() {
+    var infos = $('.infos input');
+    for (var x = 0; x < infos.length; x++) {
+        var value = $(infos[x]).val();
+        var name = $(infos[x]).attr('name');
+        if (localStorage.getItem(name) === null) {
+            localStorage.setItem(name, JSON.stringify(value));
+        }
+        var new_val = localStorage.getItem(name);
+        $(infos[x]).attr('value', JSON.parse(new_val));
+    }
+    $('.username').text(`${JSON.parse(localStorage.getItem('username'))}`);
+    $('.profile-container').siblings().slideUp("slow").hide();
+    $('.profile-container').slideDown("slow");
+}
+
+function getBanksAndCredits() {
+    let cards;
+    $('.bank-container').siblings().slideUp("slow").hide();
+    $('.bank-container').slideDown("slow");
+    if (localStorage.getItem('cards') === null) {
+        localStorage.setItem('cards', '[]');
+        cards = localStorage.getItem('cards');
+    } else {
+        cards = localStorage.getItem('cards');
+    }
+}
+$('.save-but').click(function() {
+    saveProfile();
+});
+
+
+$('.add-cc').click(function() {
+    $('.cc-modal').show().addClass('cc-modal-show').css('display', 'flex');
+    showDialog();
+});
+
+$('input[name="cc-number"]').keyup(function() {
+    // console.log($(this).val());
+    var x = $(this).val();
+    x = x.split("-").join("");
+    var n = "";
+    for (let i = 0; i < x.length; i++) {
+        n += x[i];
+        if ((i + 1) % 4 == 0 && i != 15) {
+            n += "-";
+        }
+        console.log(n);
+    }
+    change(n);
+});
+
+function change(n) {
+    $('input[name="cc-number"]').attr('value', n);
+}
+
+$('.cancel-cc').click(
+    function() {
+        closeDialog();
+        $('.cc-modal').slideUp('slow').hide('slow');
+    }
+);
+
+
+function Card(name, number, ccv, month, year) {
+    this.name = name;
+    this.number = number;
+    this.ccv = ccv;
+    this.month = month;
+    this.year = year;
+}
+
+$('.save-cc').click(function() {
+    valid = true;
+    var inp = $('.cc-form input');
+    for (var x = 0; x < inp.length; x++) {
+        if ($(inp[x]).val() == "") {
+            alert("Please enter value on all fields");
+            valid = false
+            break;
+        }
+    }
+    if (valid) {
+        let cards = JSON.parse(localStorage.getItem('cards'));
+        var name = $('input[name="name-card"]').val();
+        var number = $('input[name="cc-number"]').val();
+        var ccv = $('input[name="ccv"]').val();
+        var month = $('input[name="cc-month"]').val();
+        var year = $('input[name="cc-year"]').val();
+        card = new Card(name, number, ccv, month, year);
+        cards.push(card);
+        localStorage.setItem('cards', JSON.stringify(cards));
+        alert('Card Added');
+        closeDialog();
+        $('.cc-modal').slideUp('slow').hide('slow');
+        getBanksAndCredits();
+    }
+});
+
+function saveProfile() {
+    var infos = $('.infos input');
+
+    for (var x = 0; x < infos.length; x++) {
+        var name = $(infos[x]).attr('name');
+        var value = $(infos[x]).val();
+        localStorage.setItem(name, JSON.stringify(value));
+    }
+    window.location.reload();
+}
+$('.my-profile').click(function() {
+    $(this).siblings().removeClass('tab-active');
+    $(this).addClass('tab-active');
+    getProfile();
+});
+
+$('.b-c').click(function() {
+    $(this).siblings().removeClass('tab-active');
+    $(this).addClass('tab-active');
+    getBanksAndCredits()
+});
+$('.p-history').click(function() {
+    $(this).siblings().removeClass('tab-active');
+    $(this).addClass('tab-active');
+});

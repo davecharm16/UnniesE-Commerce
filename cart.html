@@ -16,13 +16,13 @@
     <link rel="stylesheet" href="./style.css">
 </head>
 
-<body>
+<body onload="getItemCart()">
     <header>
         <nav>
             <a href="#"><span class="logo">Unnies</span></a>
             <ul>
                 <li>
-                    <a href="#">HOME</a>
+                    <a href="./index.html">HOME</a>
                 </li>
                 <li>
                     <a href="./products.html">PRODUCTS</a>
@@ -37,7 +37,7 @@
                     </form>
                 </li>
                 <li>
-                    <a href="#"><i class="fa fa-user icon"></i></a>
+                    <a href="./profile.html"><i class="fa fa-user icon"></i></a>
                 </li>
                 <li class="active">
                     <a href="#"><i class="fa fa-shopping-cart icon"></i></a>
@@ -45,6 +45,54 @@
             </ul>
         </nav>
     </header>
+
+    <div class="cart-container">
+        <div class="cart-head">
+            <div class="cart-prod"> <input type="checkbox" name="select-all" id="select-all"> Product</div>
+            <div> Unit Price</div>
+            <div> Quantity</div>
+            <div> Total Price</div>
+            <div> Actions</div>
+        </div>
+        <div class="shopping-cart">
+            <!-- <div class="cart-item">
+                <div class="item-desc">
+                    <input type="checkbox" name="select">
+                    <div class="item-pic"><img src="./images/product-image/albums/bts/bts1.jpg"></div>
+                    <div class="cart-item-name">BTS -Dynamite Album</div>
+                </div>
+                <div class="unit-price">₱1200</div>
+                <div class="unit-quantity">
+                    <div class="q-button">
+                        <button class="op minus-cart">-</button>
+                        <div class="quantity">0</div>
+                        <button class="op plus-cart">+</button>
+                    </div>
+                </div>
+                <div class="total-price">₱1200</div>
+                <div class="remove">Delete</div>
+            </div> -->
+        </div>
+    </div>
+    <div class="cart-foot">
+        <div class="pay-method">
+            <div>
+                Payment Method :
+            </div>
+            <div class="sel">
+                <span>▼</span>
+                <select>
+                    <option value="cod">COD</option>
+                    <option value="cod">CARD</option>
+                    <option value="cod">BANK</option>
+                </select>
+            </div>
+        </div>
+        <div>
+            Merchandise Subtotal: <span class="sub-total">₱0</span>
+        </div>
+        <div class="checkout">Check Out</div>
+    </div>
 
     <script src="./resources/jquery-3.5.1.min.js"></script>
     <script src="./index.js"></script>
