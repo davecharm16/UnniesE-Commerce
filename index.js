@@ -795,16 +795,103 @@ function getProfile() {
 }
 
 function getBanksAndCredits() {
-    let cards;
+    let cardsArr;
     $('.bank-container').siblings().slideUp("slow").hide();
     $('.bank-container').slideDown("slow");
     if (localStorage.getItem('cards') === null) {
         localStorage.setItem('cards', '[]');
-        cards = localStorage.getItem('cards');
+        cardsArr = JSON.parse(localStorage.getItem('cards'));
     } else {
-        cards = localStorage.getItem('cards');
+        cardsArr = JSON.parse(localStorage.getItem('cards'));
+    }
+    $('.cc-cards').remove();
+    if (cardsArr != 0) {
+        let card;
+        for (let x = 0; x < cardsArr.length; x++) {
+            card = cardsArr[x];
+            $('.cc').append(
+                `
+                <div class="cc-cards">
+                <div class="credit-container">
+                    <div class="credit-logo">
+                        <img src="${card.img}">
+                    </div>
+                    <div class="credit-card-number">
+                       ${card.number}
+                    </div>
+                    <div class="credit-card-month">
+                        ${card.month}
+                    </div>
+                    <div class="credit-card-year">
+                        ${card.year}
+                    </div>
+                    <div class="credit-name">
+                        ${card.name}
+                    </div>
+                </div>
+            </div>
+                `
+            );
+        }
     }
 }
+
+$('.checkout').click(
+    function() {
+        collectOrder();
+        checkOut();
+    }
+);
+
+function checkOut() {
+    let orders;
+    cards = JSON.parse(localStorage.getItem('cards'));
+    orders = JSON.parse(localStorage.getItem('order'));
+    console.log(orders);
+    if (orders.length == 0) {
+        alert('No items was selected to check out');
+    } else {
+        $('.op-card').remove();
+        if ($('.sel select').val() == "cc") {
+            if (cards.length === 0) {
+                $('.cc-modal').show().addClass('cc-modal-show').css('display', 'flex').css('z-index', '2');
+                showDialog();
+            } else {
+                console.log("utoy");
+                $('.check-out-modal').show().addClass('check-out-show').css('display', 'flex').css('z-index', '2');
+                showDialog();
+            }
+        }
+    }
+}
+$('.change').click(
+    function() {
+        console.log("yow");
+        $('.modal-card').toggleClass("modal-card-show");
+    }
+);
+
+$('.m-card').click(
+    function() {
+        $('.modal-card').toggleClass('modal-card-show');
+    }
+);
+
+$('.check-cancel').click(function() {
+    $('.check-out-modal').slideUp('slow');
+    closeDialog();
+});
+//TODO ---
+$('.p-history').click(getPurchase);
+
+function getPurchase() {
+    $('.purchase-container').siblings().slideUp("slow").hide();
+    $('.purchase-container').slideDown("slow");
+}
+
+//TODO----
+
+
 $('.save-but').click(function() {
     saveProfile();
 });
@@ -815,9 +902,11 @@ $('.add-cc').click(function() {
     showDialog();
 });
 
-$('input[name="cc-number"]').keyup(function() {
+$('input[name="cc-number"]').keyup(ccFormalize);
+
+function ccFormalize() {
     // console.log($(this).val());
-    var x = $(this).val();
+    var x = $('input[name="cc-number"]').val();
     x = x.split("-").join("");
     var n = "";
     for (let i = 0; i < x.length; i++) {
@@ -827,11 +916,7 @@ $('input[name="cc-number"]').keyup(function() {
         }
         console.log(n);
     }
-    change(n);
-});
-
-function change(n) {
-    $('input[name="cc-number"]').attr('value', n);
+    return n;
 }
 
 $('.cancel-cc').click(
@@ -842,12 +927,13 @@ $('.cancel-cc').click(
 );
 
 
-function Card(name, number, ccv, month, year) {
+function Card(name, number, ccv, month, year, img) {
     this.name = name;
     this.number = number;
     this.ccv = ccv;
     this.month = month;
     this.year = year;
+    this.img = img
 }
 
 $('.save-cc').click(function() {
@@ -861,13 +947,16 @@ $('.save-cc').click(function() {
         }
     }
     if (valid) {
+        img = ["./images/cc-img/mastercard.png", "./images/cc-img/visa.jpg"];
+        let random = Math.floor(Math.random() * 2);
         let cards = JSON.parse(localStorage.getItem('cards'));
         var name = $('input[name="name-card"]').val();
-        var number = $('input[name="cc-number"]').val();
+        var number = ccFormalize();
         var ccv = $('input[name="ccv"]').val();
         var month = $('input[name="cc-month"]').val();
         var year = $('input[name="cc-year"]').val();
-        card = new Card(name, number, ccv, month, year);
+        var im = img[random];
+        card = new Card(name, number, ccv, month, year, im);
         cards.push(card);
         localStorage.setItem('cards', JSON.stringify(cards));
         alert('Card Added');

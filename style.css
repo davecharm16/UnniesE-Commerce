@@ -1109,7 +1109,8 @@ select {
 }
 
 .profile-container,
-.bank-container {
+.bank-container,
+.purchase-container {
     display: flex;
     width: 100%;
     height: 100%;
@@ -1121,19 +1122,62 @@ select {
     justify-content: space-around;
 }
 
-.c-head {
+.c-head,
+.p-head {
     display: flex;
     width: 100%;
     height: 30px;
     justify-content: space-between;
 }
 
+.p-head {
+    font-family: var(--questrial);
+    font-size: 1.2rem;
+    justify-content: space-around;
+}
+
+.t-recieve,
+.delivered {
+    cursor: pointer;
+}
+
 .cc,
-.bank {
+.bank,
+.ph {
     display: flex;
-    height: 50%;
+    height: 100%;
     flex-direction: column;
     overflow-y: scroll;
+}
+
+.cc-cards {
+    margin: 1rem;
+    background-color: #fff;
+    font-family: var(--questrial);
+}
+
+.credit-card-number {
+    flex-shrink: 0;
+}
+
+.credit-container {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    height: 50px;
+    align-items: center;
+    padding: 0 1rem;
+}
+
+.credit-logo {
+    width: 50px;
+    height: 100%;
+}
+
+.credit-logo img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
 }
 
 .cc-title,
@@ -1160,7 +1204,8 @@ select {
     background-color: #8b6400;
 }
 
-.cc-modal {
+.cc-modal,
+.check-out-modal {
     display: none;
     position: absolute;
     background-color: #f2f0f0d3;
@@ -1168,9 +1213,154 @@ select {
     width: 100%;
 }
 
-.cc-modal-show {
+.check-out-modal {
+    align-items: center;
+}
+
+.cc-modal-show,
+.check-out-show {
     display: flex;
     justify-content: center;
+}
+
+.item-head {
+    position: relative;
+    display: flex;
+    height: 50px;
+    width: 100%;
+    justify-content: space-between;
+    flex-wrap: nowrap;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.op-card {
+    align-items: center;
+    display: flex;
+    flex-wrap: nowrap;
+}
+
+.op-card span {
+    cursor: pointer;
+    color: #07236C;
+    margin-left: 1rem;
+}
+
+.v-card,
+.m-card {
+    display: flex;
+    flex-wrap: nowrap;
+    flex-shrink: 0;
+    align-items: center;
+}
+
+.m-card {
+    margin-bottom: 0.3rem;
+}
+
+.op-card img {
+    width: 25px;
+    height: 25px;
+    object-fit: cover;
+}
+
+.check-out-form {
+    background-color: #f2f0f0;
+    display: flex;
+    width: 65%;
+    height: 90vh;
+    min-width: 800px;
+    box-shadow: 0 2px 5px #000;
+    flex-direction: column;
+    padding: 0 2rem;
+    font-family: var(--questrial);
+    min-height: 600px;
+    justify-content: space-around;
+}
+
+.package-info {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 50%;
+    height: 70px;
+}
+
+.total-price-ship {
+    display: flex;
+    flex-direction: column;
+    font-size: 30px;
+}
+
+.check-buttons {
+    display: flex;
+    width: 200px;
+    justify-content: space-between;
+}
+
+.sf {
+    font-size: 0.8rem;
+}
+
+.c-info input {
+    background: none;
+    width: 60%;
+    border: none;
+    outline: none;
+    border-bottom: 1px solid black;
+    padding: 0.5rem 1rem;
+    font-family: var(--questrial);
+    font-size: 1rem;
+}
+
+.packages {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 200px;
+    max-height: 200px;
+    border-bottom: 1px dotted #000;
+    overflow-y: scroll;
+}
+
+.package-item {
+    display: flex;
+    margin-bottom: 1rem;
+    height: 100px;
+    width: 100%;
+    background-color: #fff;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.contact-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    height: 150px;
+}
+
+.package-item img {
+    width: 70px;
+    height: 70px;
+    object-fit: cover;
+}
+
+.modal-card {
+    display: none;
+    cursor: pointer;
+    width: 250px;
+    padding: 0.5rem 1rem;
+    max-height: 50px;
+    border: 1px solid black;
+    position: absolute;
+    top: 50px;
+    overflow-y: scroll;
+    flex-direction: column;
+}
+
+.modal-card-show {
+    display: flex;
 }
 
 .cc-form {
@@ -1228,6 +1418,10 @@ input[name="cc-month"] {
     padding: 0.5rem;
 }
 
+.cc-form input {
+    text-align: center;
+}
+
 .cc-form input::placeholder {
     text-align: center;
     font-family: var(--questrial);
@@ -1283,30 +1477,36 @@ input[name="cc-month"] {
 
 .save-but,
 .save-cc,
-.cancel-cc {
+.cancel-cc,
+.check-cancel,
+.check-confirm {
     margin-left: 200px;
     padding: 0.5rem 1rem;
     font-family: var(--questrial);
     color: white;
-    background-color: #42C156;
+    background-color: #04b11e;
     transition: all 0.5s ease-in;
     cursor: pointer;
 }
 
 .save-but:hover,
-.save-cc:hover {
+.save-cc:hover,
+.check-confirm:hover {
     background-color: #166622;
 }
 
-.save-cc {
+.save-cc,
+.check-confirm {
     margin: 0;
 }
 
-.cancel-cc {
+.cancel-cc,
+.check-cancel {
     margin: 0;
     background-color: #ad0e0e;
 }
 
-.cancel-cc:hover {
+.cancel-cc:hover,
+.check-cancel:hover {
     background-color: #470101;
 }
