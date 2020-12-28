@@ -8,6 +8,7 @@ function Products(name, image, price, type, stocks, variety, gallery, rate, qty)
     this.gallery = gallery;
     this.rate = rate;
     this.qty = qty;
+    this.mark = "f";
 }
 
 var featured = [
@@ -756,15 +757,21 @@ function uncheckAllItems() {
 
 function collectOrder() {
     cart = JSON.parse(localStorage.getItem('cart'));
+    n_cart = [];
     order = [];
     items = $('.cart-item');
     total = 0;
     for (let x = 0; x < items.length; x++) {
         if (items.eq(x).find($('input[name="select"]')).is(":checked")) {
+            cart[x].mark = "c";
             order.push(cart[x]);
             total += (cart[x].qty * cart[x].price);
+        } else {
+            cart[x].mark = "f";
         }
+        n_cart.push(cart[x]);
     }
+    localStorage.setItem('cart', JSON.stringify(n_cart));
     setOrder(order);
     $('.sub-total').text(`₱${total}`);
 }
@@ -828,12 +835,27 @@ function getBanksAndCredits() {
                     <div class="credit-name">
                         ${card.name}
                     </div>
+                    <div class="remove-card">
+                        Remove
+                    </div>
                 </div>
             </div>
                 `
             );
         }
     }
+    $('.remove-card').click(function() {
+        var indexCard = ($(this).parent().parent().index() - 1);
+        deleteCard(indexCard);
+    });
+}
+
+function deleteCard(index) {
+    var creditCards = JSON.parse(localStorage.getItem('cards'));
+    var itemCard = $('.cc-cards');
+    creditCards.splice(index, 1);
+    itemCard.eq(index).remove();
+    localStorage.setItem('cards', JSON.stringify(creditCards));
 }
 
 $('.checkout').click(
@@ -845,42 +867,128 @@ $('.checkout').click(
 
 function checkOut() {
     let orders;
+    var nameInfo = JSON.parse(localStorage.getItem('name'));
+    var contact = JSON.parse(localStorage.getItem('phone'));
+    var address = JSON.parse(localStorage.getItem('address'));
+    var t = 100;
     cards = JSON.parse(localStorage.getItem('cards'));
     orders = JSON.parse(localStorage.getItem('order'));
+    var selection = $('.sel select').val();
     console.log(orders);
     if (orders.length == 0) {
         alert('No items was selected to check out');
     } else {
         $('.op-card').remove();
-        if ($('.sel select').val() == "cc") {
+        $('.package-item').remove();
+        for (let z = 0; z < orders.length; z++) {
+            t += (orders[z].qty * orders[z].price)
+            $('.packages').append(
+                `
+                <div class="package-item">
+                        <img src="${orders[z].image}">
+                        <div class="package-title">
+                            ${orders[z].name}
+                        </div>
+                        <div class="package-price">
+                            Price : ₱${orders[z].price}
+                        </div>
+                        <div class="package-qty">
+                            Qty : ${orders[z].qty}
+                        </div>
+                        <div class="package-total">
+                            Total: ₱${orders[z].qty*orders[z].price}
+                        </div>
+                    </div>
+                `
+            );
+        }
+        $('.t-price').text(`Total Price : ₱${t}`);
+        $('.total-items').text(`Total Item/s : ${orders.length}`);
+        $('.p-method').text(`Payment Method: ${selection}`);
+        $('input[name="n"]').attr('value', nameInfo);
+        $('input[name="c"]').attr('value', contact);
+        $('input[name="a"]').attr('value', address);
+
+        if (selection == "Credit Card") {
             if (cards.length === 0) {
                 $('.cc-modal').show().addClass('cc-modal-show').css('display', 'flex').css('z-index', '2');
                 showDialog();
             } else {
-                console.log("utoy");
+                $('.item-head').append(
+                    ` 
+                <div class="op-card">
+                    <div class="v-card"><img src="${cards[0].img}">${cards[0].number}</div>
+                    <span class="change">change</span>
+                    <div class="modal-card"></div>
+                </div>
+                `
+                );
+                for (let x = 0; x < cards.length; x++) {
+                    $('.modal-card').append(
+                        `
+                        <div class="m-card"><img src="${cards[x].img}"> ${cards[x].number}</div>
+                        `
+                    );
+                }
                 $('.check-out-modal').show().addClass('check-out-show').css('display', 'flex').css('z-index', '2');
                 showDialog();
+                $('.change').click(
+                    function() {
+                        $('.modal-card').toggleClass("modal-card-show");
+                    }
+                );
+
+                $('.m-card').click(
+                    function() {
+                        $('.v-card').html(`<img src="${cards[$(this).index()].img}">${cards[$(this).index()].number}`)
+                        $('.modal-card').toggleClass('modal-card-show');
+                    }
+                );
             }
+        } else {
+            $('.check-out-modal').show().addClass('check-out-show').css('display', 'flex').css('z-index', '2');
+            showDialog();
         }
     }
 }
-$('.change').click(
-    function() {
-        console.log("yow");
-        $('.modal-card').toggleClass("modal-card-show");
-    }
-);
 
-$('.m-card').click(
-    function() {
-        $('.modal-card').toggleClass('modal-card-show');
-    }
-);
 
 $('.check-cancel').click(function() {
     $('.check-out-modal').slideUp('slow');
     closeDialog();
 });
+
+$('.check-confirm').click(
+    function() {
+        let confirmOrders;
+        let orders = JSON.parse(localStorage.getItem('order'));
+        if (localStorage.getItem('con-order') === null) {
+            localStorage.setItem('con-order', '[]');
+            confirmOrders = JSON.parse(localStorage.getItem('con-order'));
+        } else {
+            confirmOrders = JSON.parse(localStorage.getItem('con-order'));
+        }
+        orders.forEach(order => {
+            confirmOrders.push(JSON.stringify(order));
+        });
+        deleteConfirmedItems();
+        localStorage.setItem('con-order', confirmOrders);
+        $('.check-out-modal').slideUp('slow');
+        closeDialog();
+        alert('Items Confirmed');
+    }
+);
+
+function deleteConfirmedItems() {
+    cart = JSON.parse(localStorage.getItem('cart'));
+    // items = $('.cart-item');
+    for (let j = cart.length - 1; j >= 0; j--) {
+        if (cart[j].mark == "c") {
+            deleteItem(j);
+        }
+    }
+}
+
 //TODO ---
 $('.p-history').click(getPurchase);
 
@@ -901,6 +1009,8 @@ $('.add-cc').click(function() {
     $('.cc-modal').show().addClass('cc-modal-show').css('display', 'flex');
     showDialog();
 });
+
+
 
 $('input[name="cc-number"]').keyup(ccFormalize);
 

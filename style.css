@@ -1479,7 +1479,8 @@ input[name="cc-month"] {
 .save-cc,
 .cancel-cc,
 .check-cancel,
-.check-confirm {
+.check-confirm,
+.remove-card {
     margin-left: 200px;
     padding: 0.5rem 1rem;
     font-family: var(--questrial);
@@ -1501,12 +1502,14 @@ input[name="cc-month"] {
 }
 
 .cancel-cc,
-.check-cancel {
+.check-cancel,
+.remove-card {
     margin: 0;
     background-color: #ad0e0e;
 }
 
 .cancel-cc:hover,
-.check-cancel:hover {
+.check-cancel:hover,
+.remove-card:hover {
     background-color: #470101;
 }
