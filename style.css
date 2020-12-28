@@ -544,7 +544,8 @@ footer div>ul li a {
 
 /*-----------Product----*/
 
-.product-container {
+.product-container,
+.featured-body {
     display: block;
     width: 100%;
     min-height: 100vh;
@@ -619,7 +620,8 @@ select {
     margin-right: 1rem;
 }
 
-.product-holder {
+.product-holder,
+.featured-holder {
     margin-top: 3rem;
     display: grid;
     width: 100%;
@@ -627,7 +629,13 @@ select {
     grid-gap: 1rem;
 }
 
-.product-card {
+.featured-holder {
+    grid-gap: 2rem;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+}
+
+.product-card,
+.featured-card {
     display: flex;
     height: 500px;
     flex-direction: column;
@@ -640,8 +648,15 @@ select {
     overflow: hidden;
 }
 
-.product-image {
-    background-color: rgba(0, 0, 0, 0.5);
+.featured-card {
+    align-items: flex-start;
+    font-size: 25px;
+    justify-content: flex-start;
+}
+
+.product-image,
+.img-cont {
+    background-color: rgba(0, 0, 0, 0.3);
     margin-top: 1rem;
     width: 90%;
     height: 70%;
@@ -650,15 +665,46 @@ select {
     opacity: 0.7;
 }
 
+.img-cont {
+    background-color: none;
+    display: flex;
+    align-self: center;
+    height: 80%;
+    overflow: hidden;
+}
+
+.featured-card img {
+    margin: 0;
+    display: flex;
+    align-content: center;
+    width: 100%;
+    height: 100%;
+}
+
 .product-image:hover {
     opacity: 1;
     transform: scale(1.1);
+}
+
+.featured-card img:hover {
+    transform: scale(1.3);
 }
 
 .product-name,
 .product-price {
     font-size: 1.5rem;
     font-family: var(--prompt);
+}
+
+.featured-card .product-name,
+.product-sold {
+    margin-left: 1rem;
+}
+
+.product-sold {
+    font-family: var(--prompt);
+    font-weight: 300;
+    font-size: 1rem;
 }
 
 
@@ -1141,9 +1187,48 @@ select {
     cursor: pointer;
 }
 
+.to-recieve,
+.delivered-items {
+    display: flex;
+    width: 100%;
+    overflow-y: scroll;
+    height: 90%;
+    flex-direction: column;
+    border: 1px solid black;
+}
+
+.item-recieve,
+.d-items {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: nowrap;
+    height: 70px;
+    align-items: center;
+    background-color: #fff;
+    margin-bottom: 1rem;
+    font-family: var(--questrial);
+}
+
+.r-name,
+.d-name {
+    display: flex;
+    width: 120px;
+    height: 100%;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+.item-recieve img,
+.d-items img {
+    display: flex;
+    flex-shrink: 0;
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+}
+
 .cc,
-.bank,
-.ph {
+.bank {
     display: flex;
     height: 100%;
     flex-direction: column;
@@ -1480,7 +1565,9 @@ input[name="cc-month"] {
 .cancel-cc,
 .check-cancel,
 .check-confirm,
-.remove-card {
+.remove-card,
+.r-cancel,
+.d-rate {
     margin-left: 200px;
     padding: 0.5rem 1rem;
     font-family: var(--questrial);
@@ -1503,13 +1590,47 @@ input[name="cc-month"] {
 
 .cancel-cc,
 .check-cancel,
-.remove-card {
+.remove-card,
+.r-cancel {
     margin: 0;
     background-color: #ad0e0e;
 }
 
 .cancel-cc:hover,
 .check-cancel:hover,
-.remove-card:hover {
+.remove-card:hover,
+.r-cancel:hover {
     background-color: #470101;
+}
+
+.d-t-rate span {
+    cursor: pointer;
+    /* color: #CF9500;*/
+    font-size: 2rem;
+}
+
+.yellow {
+    color: #CF9500;
+}
+
+.d-rate {
+    margin: 0;
+    background-color: #CF9500;
+}
+
+.d-rate:hover {
+    background-color: #866103;
+}
+
+
+/*--------Featured -----*/
+
+.featured-title {
+    font-family: var(--prompt);
+    font-size: 35px;
+    margin-top: 50px;
+}
+
+.featured-title span {
+    font-weight: 700;
 }

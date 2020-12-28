@@ -9,6 +9,7 @@ function Products(name, image, price, type, stocks, variety, gallery, rate, qty)
     this.rate = rate;
     this.qty = qty;
     this.mark = "f";
+    this.proc = "COD";
 }
 
 var featured = [
@@ -334,6 +335,48 @@ $('.carousel-container .caption .act-button').click(function() {
     localStorage.setItem('view', y);
     window.location.href = "view.html";
 });
+
+
+//Featured Area
+
+var topSellers = [
+    new Products("Twice- Eyes wide Open", "./images/product-image/albums/twice/twice1.jpg", 1100, "album", 250, [], ["./images/product-image/albums/twice/twice1.jpg"], 4, 1),
+    new Products("Twice - Mina Photobook", "./images/product-image/photo-book/twice/twice1.png", 550, "photobook", 250, [], ["./images/product-image/photo-book/twice/twice1.png"], 4, 1),
+    new Products("Black Pink -Light Stick", "./images/product-image/featured/featured5.jpg", 1299, "fanlight", 200, [], ["./images/product-image/featured/featured5.jpg"], 5, 1),
+    new Products("BTS- Fan Light V3", "./images/product-image/fanlight/bts/bts2.jpg", 1599, "fanlight", 200, [], ["./images/product-image/fanlight/bts/bts2.jpg"], 5, 1),
+    new Products("Twice - Choker", "./images/product-image/accessories/twice/twice2.jpg", 399, "accessories", 250, [], ["./images/product-image/accessories/twice/twice2.jpg"], 5, 1),
+    new Products("BTS - Coin Purse", "./images/product-image/accessories/bts/bts2.jpg", 599, "accessories", 250, [], ["./images/product-image/accessories/bts/bts2.jpg"], 5, 1),
+];
+
+$('.products-html').ready(function() { updateFeatureContent(); });
+
+
+
+function updateFeatureContent() {
+    var prodArray = topSellers;
+    for (let x = 0; x < prodArray.length; x++) {
+        $('.featured-holder').append(
+            `
+            <div class="featured-card">
+                <div class="img-cont">
+                    <img class="product-image" src="${prodArray[x].image}">
+                </div>
+                <div class="product-name">${prodArray[x].name}</div>
+                <div class="product-sold">Sold: ${prodArray[x].stocks} pcs</div>
+            </div>
+            `
+        );
+    }
+    $('.featured-card').click(
+        function() {
+            // console.log(prodArray[$(this).index()]);
+            var y = JSON.stringify(prodArray[$(this).index()]);
+            localStorage.setItem('view', y);
+            window.location.href = "view.html";
+            // updateView();
+        }
+    );
+}
 
 
 
@@ -864,6 +907,9 @@ $('.checkout').click(
         checkOut();
     }
 );
+if (localStorage.getItem('cards') === null) {
+    localStorage.setItem('cards', '[]');
+}
 
 function checkOut() {
     let orders;
@@ -960,6 +1006,7 @@ $('.check-cancel').click(function() {
 
 $('.check-confirm').click(
     function() {
+        select = $('.sel select').val();
         let confirmOrders;
         let orders = JSON.parse(localStorage.getItem('order'));
         if (localStorage.getItem('con-order') === null) {
@@ -969,10 +1016,13 @@ $('.check-confirm').click(
             confirmOrders = JSON.parse(localStorage.getItem('con-order'));
         }
         orders.forEach(order => {
-            confirmOrders.push(JSON.stringify(order));
+            if (select == "Credit Card") {
+                order.proc = "Paid";
+            }
+            confirmOrders.push(order);
         });
         deleteConfirmedItems();
-        localStorage.setItem('con-order', confirmOrders);
+        localStorage.setItem('con-order', JSON.stringify(confirmOrders));
         $('.check-out-modal').slideUp('slow');
         closeDialog();
         alert('Items Confirmed');
@@ -995,8 +1045,58 @@ $('.p-history').click(getPurchase);
 function getPurchase() {
     $('.purchase-container').siblings().slideUp("slow").hide();
     $('.purchase-container').slideDown("slow");
+    getRecieve();
 }
 
+function getRecieve() {
+    let recOrders;
+    $('.delivered-items').hide();
+    $('.to-recieve').slideDown('slow').css('display', 'flex');
+    $('.item-recieve').remove();
+    if (localStorage.getItem('con-order') === null) {
+        localStorage.setItem('con-order', '[]');
+    }
+    recOrders = JSON.parse(localStorage.getItem('con-order'));
+    for (let j = 0; j < recOrders.length; j++) {
+        $('.to-recieve').append(`
+        <div class="item-recieve">
+            <img src=${recOrders[j].image} alt="">
+            <div class="r-name">${recOrders[j].name}</div>
+            <div class="r-price">Total Price:₱${recOrders[j].qty * recOrders[j].price}</div>
+            <div class="r-qty">Qty:${recOrders[j].qty}</div>
+            <div class="r-total">${recOrders[j].proc}</div>
+            <div class="r-cancel">Cancel</div>
+        </div>
+        `);
+    }
+    $('.r-cancel').click(
+        function() {
+            let rOrder = JSON.parse(localStorage.getItem('con-order'));
+            console.log(rOrder);
+            index = $(this).parent().index();
+            rOrder.splice(index, 1);
+            $('.item-recieve').eq(index).remove();
+            localStorage.setItem('con-order', JSON.stringify(rOrder));
+        }
+    );
+}
+
+
+function getDelivered() {
+    $('.to-recieve').hide();
+    $('.delivered-items').slideDown('slow').css('display', 'flex');
+}
+
+$('.t-recieve').click(function() {
+    $(this).addClass('tab-active');
+    $(this).siblings().removeClass('tab-active')
+    getRecieve();
+});
+$('.delivered').click(function() {
+    $(this).addClass('tab-active');
+    $(this).siblings().removeClass('tab-active')
+    getDelivered();
+});
 //TODO----
 
 
@@ -1100,4 +1200,16 @@ $('.b-c').click(function() {
 $('.p-history').click(function() {
     $(this).siblings().removeClass('tab-active');
     $(this).addClass('tab-active');
+});
+
+
+$('.d-t-rate span').mouseover(function() {
+    index = $(this).index() + 1;
+    $(this).parent().find('span').removeClass('yellow');
+    $(this).parent().find(`span:lt(${index})`).addClass('yellow').find(`span:gt(${index})`).removeClass('yellow');
+});
+
+$('.d-rate').click(function() {
+    $(this).text('Rated').css('background-color', '#866103');
+    $(this).parent().find('span').css('pointer-events', 'none');
 });
