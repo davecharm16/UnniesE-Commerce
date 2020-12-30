@@ -13,14 +13,17 @@ function Products(name, image, price, type, stocks, variety, gallery, rate, qty)
 }
 
 var featured = [
-    new Products("Map of the Soul", "./images/product-image/featured/featured1.jpg", 2200, "album", 200, [], ["./images/product-image/featured/featured1.jpg"], 4, 1),
-    new Products("Black Pink The Album", "./images/product-image/featured/featured2.jpg", 2350, "album", 150, [], ["./images/product-image/featured/featured2.jpg"], 5, 1),
-    new Products("Twice Fancy Album", "./images/product-image/featured/featured3.jpg", 2300, "album", 200, [], ["./images/product-image/featured/featured3.jpg"], 4, 1),
+    new Products("Map of the Soul", "./images/product-image/featured/featured1.jpg", 2200, "album", 200, [], ["./images/product-image/featured/featured1.jpg", "./images/product-image/albums/bts/bts2var/bt1.jpg", "./images/product-image/albums/bts/bts2var/bt2.jpg"], 4, 1),
+    new Products("Black Pink The Album", "./images/product-image/featured/featured2.jpg", 2350, "album", 150, [], ["./images/product-image/featured/featured2.jpg", "./images/product-image/albums/bp/bpvar/bp1.png"], 5, 1),
+    new Products("Twice Fancy Album", "./images/product-image/featured/featured3.jpg", 2300, "album", 200, [], ["./images/product-image/featured/featured3.jpg", "./images/product-image/albums/twice/twicevar/t1.jpg"], 4, 1),
 ];
 //------carousel
 
 var sideFeature = [
-    new Products("Map of of the Soul Hoodie", "./images/product-image/featured/featured4.png", 700, "merchandise", 200, [], ["./images/product-image/featured/featured4.png"], 4, 1),
+    new Products("Map of of the Soul Hoodie", "./images/product-image/featured/featured4.png", 700, "merchandise", 200, [
+        ["Grey", "Blue", "Green", "Red"],
+        ["S", "M", "L"]
+    ], ["./images/product-image/featured/featured4.png", "./images/product-image/featured/featured bt var/1.png", "./images/product-image/featured/featured bt var/2.jpg"], 4, 1),
     new Products("Black Pink Light Stick", "./images/product-image/featured/featured5.jpg", 1500, "fanlight", 200, [], ["./images/product-image/featured/featured5.jpg"], 5, 1),
 ];
 
@@ -340,12 +343,14 @@ $('.carousel-container .caption .act-button').click(function() {
 //Featured Area
 
 var topSellers = [
-    new Products("Twice- Eyes wide Open", "./images/product-image/albums/twice/twice1.jpg", 1100, "album", 250, [], ["./images/product-image/albums/twice/twice1.jpg"], 4, 1),
+    new Products("Twice- Eyes wide Open", "./images/product-image/albums/twice/twice1.jpg", 1100, "album", 250, [], ["./images/product-image/albums/twice/twice1.jpg", "./images/product-image/albums/twice/twicevar/t2.jpg", "./images/product-image/albums/twice/twicevar/t3.jpg"], 4, 1),
     new Products("Twice - Mina Photobook", "./images/product-image/photo-book/twice/twice1.png", 550, "photobook", 250, [], ["./images/product-image/photo-book/twice/twice1.png"], 4, 1),
     new Products("Black Pink -Light Stick", "./images/product-image/featured/featured5.jpg", 1299, "fanlight", 200, [], ["./images/product-image/featured/featured5.jpg"], 5, 1),
     new Products("BTS- Fan Light V3", "./images/product-image/fanlight/bts/bts2.jpg", 1599, "fanlight", 200, [], ["./images/product-image/fanlight/bts/bts2.jpg"], 5, 1),
-    new Products("Twice - Choker", "./images/product-image/accessories/twice/twice2.jpg", 399, "accessories", 250, [], ["./images/product-image/accessories/twice/twice2.jpg"], 5, 1),
-    new Products("BTS - Coin Purse", "./images/product-image/accessories/bts/bts2.jpg", 599, "accessories", 250, [], ["./images/product-image/accessories/bts/bts2.jpg"], 5, 1),
+    new Products("Twice - Choker", "./images/product-image/accessories/twice/twice2.jpg", 399, "accessories", 250, [], ["./images/product-image/accessories/twice/twice2.jpg", "./images/product-image/merchandise/twice choke/1.png"], 5, 1),
+    new Products("BTS - Coin Purse", "./images/product-image/accessories/bts/bts2.jpg", 599, "accessories", 250, [
+        ["black", "red", "blue", "green", "grey"]
+    ], ["./images/product-image/accessories/bts/bts2.jpg", ], 5, 1),
 ];
 
 $('.products-html').ready(function() { updateFeatureContent(); });
@@ -382,11 +387,11 @@ function updateFeatureContent() {
 
 // Product Area
 var albums = [
-    new Products("BTS - Dynamite Album", "./images/product-image/albums/bts/bts1.jpg", 1200, "album", 250, [], ["./images/product-image/albums/bts/bts1.jpg"], 5, 1),
-    new Products("BTS - Map of the Soul", "./images/product-image/albums/bts/bts2.jpg", 1300, "album", 250, [], ["./images/product-image/albums/bts/bts2.jpg"], 4, 1),
+    new Products("BTS - Dynamite Album", "./images/product-image/albums/bts/bts1.jpg", 1200, "album", 250, [], ["./images/product-image/albums/bts/bts1.jpg", "./images/product-image/albums/bts/bts1var/1.jpg", "./images/product-image/albums/bts/bts1var/2.jpg"], 5, 1),
+    new Products("BTS - Map of the Soul", "./images/product-image/albums/bts/bts2.jpg", 1300, "album", 250, [], ["./images/product-image/albums/bts/bts2.jpg", "./images/product-image/albums/bts/bts2var/bt1.jpg", "./images/product-image/albums/bts/bts2var/bt2.jpg"], 4, 1),
     new Products("BTS - Wings Album", "./images/product-image/albums/bts/bts3.jpg", 1150, "album", 250, [], ["./images/product-image/albums/bts/bts3.jpg"], 4, 1),
-    new Products("Twice- Eyes wide Open", "./images/product-image/albums/twice/twice1.jpg", 1100, "album", 250, [], ["./images/product-image/albums/twice/twice1.jpg"], 4, 1),
-    new Products("Black Pink The Album", "./images/product-image/featured/featured2.jpg", 2350, "album", 150, [], ["./images/product-image/featured/featured2.jpg"], 5, 1),
+    new Products("Twice- Eyes wide Open", "./images/product-image/albums/twice/twice1.jpg", 1100, "album", 250, [], ["./images/product-image/albums/twice/twice1.jpg", "./images/product-image/albums/twice/twicevar/t2.jpg", "./images/product-image/albums/twice/twicevar/t3.jpg"], 4, 1),
+    new Products("Black Pink The Album", "./images/product-image/featured/featured2.jpg", 2350, "album", 150, [], ["./images/product-image/featured/featured2.jpg", "./images/product-image/albums/bp/bpvar/bp1.png"], 5, 1),
     new Products("Black Season Greetings", "./images/product-image/albums/bp/bp1.jpg", 1950, "album", 150, [], ["./images/product-image/albums/bp/bp1.jpg"], 4, 1),
 ];
 var merchandise = [
@@ -419,13 +424,15 @@ var fanLight = [
 ];
 var accessories = [
     new Products("Twice - Tumbler", "./images/product-image/accessories/twice/twice1.png", 799, "accessories", 250, [], ["./images/product-image/accessories/twice/twice1.png"], 5, 1),
-    new Products("Twice - Choker", "./images/product-image/accessories/twice/twice2.jpg", 399, "accessories", 250, [], ["./images/product-image/accessories/twice/twice2.jpg"], 5, 1),
+    new Products("Twice - Choker", "./images/product-image/accessories/twice/twice2.jpg", 399, "accessories", 250, [], ["./images/product-image/accessories/twice/twice2.jpg", "./images/product-image/merchandise/twice choke/1.png"], 5, 1),
     new Products("Twice - Coin Purse", "./images/product-image/accessories/twice/twice3.jpg", 599, "accessories", 250, [], ["./images/product-image/accessories/twice/twice3.jpg"], 4, 1),
     new Products("Twice - Eyeglass Pouch", "./images/product-image/accessories/twice/twice4.jpg", 799, "accessories", 250, [], ["./images/product-image/accessories/twice/twice4.jpg"], 5, 1),
     new Products("Black Pink - Key chain", "./images/product-image/accessories/bp/bp2.jpg", 199, "accessories", 250, [], ["./images/product-image/accessories/bp/bp2.jpg"], 5, 1),
     new Products("Black Pink - Charger Docker", "./images/product-image/accessories/bp/bp3.jpg", 499, "accessories", 250, [], ["./images/product-image/accessories/bp/bp3.jpg"], 5, 1),
     new Products("BTS - Key Chain", "./images/product-image/accessories/bts/bts1.jpg", 199, "accessories", 250, [], ["./images/product-image/accessories/bts/bts1.jpg"], 5, 1),
-    new Products("BTS - Coin Purse", "./images/product-image/accessories/bts/bts2.jpg", 599, "accessories", 250, [], ["./images/product-image/accessories/bts/bts2.jpg"], 5, 1),
+    new Products("BTS - Coin Purse", "./images/product-image/accessories/bts/bts2.jpg", 599, "accessories", 250, [
+        ["black", "red", "blue", "green", "grey"]
+    ], ["./images/product-image/accessories/bts/bts2.jpg", ], 5, 1),
 ];
 
 
@@ -1212,4 +1219,271 @@ $('.d-t-rate span').mouseover(function() {
 $('.d-rate').click(function() {
     $(this).text('Rated').css('background-color', '#866103');
     $(this).parent().find('span').css('pointer-events', 'none');
+});
+
+$('.signout-but').click(function() {
+    window.location.href = "index.html";
+    localStorage.setItem('logIn', 'false');
+});
+
+
+// ----------ADDMIN JS ---------//
+function getDashBoard() {
+    $('.dash-main').slideDown('slow');
+    $('.dash-main').siblings().hide();
+    $('.n-order-main').slideDown('slow');
+    $('.n-order-main').siblings().hide();
+}
+
+function getProduct() {
+    $('.products-main').slideDown('slow');
+    $('.products-main').siblings().hide();
+    getAllProduct();
+}
+
+$('.admin-but').click(
+    function() {
+        window.location.href = "./adminDashboard.html";
+    }
+);
+$('.dashboard').click(function() {
+    $(this).addClass('dash-active');
+    $(this).siblings().removeClass('dash-active');
+    getDashBoard();
+});
+$('.dash-products').click(function() {
+    $(this).addClass('dash-active');
+    $(this).siblings().removeClass('dash-active');
+    getProduct();
+});
+
+$('.n-order-show').click(
+    function() {
+        console.log($(this))
+        $(this).parent().find('.n-order-info').toggleClass('n-show');
+    }
+);
+
+$('.s-order-show').click(function() {
+    $(this).parent().find('.s-order-info').toggleClass('s-show');
+})
+
+$('.confirm').click(function() {
+    $(this).parent().parent().hide();
+    var x = parseInt($('.n-order .m-value').text(), 10);
+    x -= 1;
+    $('.n-order .m-value').text(x);
+});
+
+$('.n-order').click(getDashBoard);
+
+$('.s-order').click(function() {
+    $('.s-order-main').slideDown('slow');
+    $('.s-order-main').siblings().hide();
+});
+
+$('.n-user').click(function() {
+    $('.n-user-main').slideDown('slow');
+    $('.n-user-main').siblings().hide();
+})
+
+$('.select-date').change(function() {
+    $('.day-sale span').text($(this).val());
+    $('.day-profit span').text($(this).val());
+})
+
+/*------------admin products-------*/
+
+allProducts = [
+    new Products("BTS - Dynamite Album", "./images/product-image/albums/bts/bts1.jpg", 1200, "album", 250, [], ["./images/product-image/albums/bts/bts1.jpg", "./images/product-image/albums/bts/bts1var/1.jpg", "./images/product-image/albums/bts/bts1var/2.jpg"], 5, 1),
+    new Products("BTS - Map of the Soul", "./images/product-image/albums/bts/bts2.jpg", 1300, "album", 250, [], ["./images/product-image/albums/bts/bts2.jpg", "./images/product-image/albums/bts/bts2var/bt1.jpg", "./images/product-image/albums/bts/bts2var/bt2.jpg"], 4, 1),
+    new Products("BTS - Wings Album", "./images/product-image/albums/bts/bts3.jpg", 1150, "album", 250, [], ["./images/product-image/albums/bts/bts3.jpg"], 4, 1),
+    new Products("Twice- Eyes wide Open", "./images/product-image/albums/twice/twice1.jpg", 1100, "album", 250, [], ["./images/product-image/albums/twice/twice1.jpg", "./images/product-image/albums/twice/twicevar/t2.jpg", "./images/product-image/albums/twice/twicevar/t3.jpg"], 4, 1),
+    new Products("Black Pink The Album", "./images/product-image/featured/featured2.jpg", 2350, "album", 150, [], ["./images/product-image/featured/featured2.jpg", "./images/product-image/albums/bp/bpvar/bp1.png"], 5, 1),
+    new Products("Black Season Greetings", "./images/product-image/albums/bp/bp1.jpg", 1950, "album", 150, [], ["./images/product-image/albums/bp/bp1.jpg"], 4, 1),
+    new Products("Map of of the Soul Hoodie", "./images/product-image/featured/featured4.png", 700, "merchandise", 200, [], ["./images/product-image/featured/featured4.png"], 5, 1),
+    new Products("Black Pink Shirt and Short", "./images/product-image/merchandise/bp1.jpg", 950, "merchandise", 200, [], ["./images/product-image/merchandise/bp1.jpg"], 5, 1),
+    new Products("BTS - Hoodie", "./images/product-image/merchandise/BTS1.jpg", 750, "merchandise", 200, [], ["./images/product-image/merchandise/BTS1.jpg"], 4, 1),
+    new Products("BTS - Mini Bag", "./images/product-image/merchandise/bts2.jpg", 650, "merchandise", 200, [], ["./images/product-image/merchandise/bts2.jpg"], 5, 1),
+    new Products("Black Pink The Album Hoodie", "./images/product-image/merchandise/bp3.jpg", 950, "merchandise", 200, [
+        ["Black", "Grey", "Pink", "Blue"],
+        ["S", "M", "L", "XL", "XS"]
+    ], ["./images/product-image/merchandise/bp3var/1.jpg", "./images/product-image/merchandise/bp3var/3.jpg", "./images/product-image/merchandise/bp3var/4.jpg", "./images/product-image/merchandise/bp3var/5.jpg"], 4, 1),
+    new Products("Black Pink Cap", "./images/product-image/merchandise/bp2.jpg", 400, "merchandise", 200, [], ["./images/product-image/merchandise/bp2.jpg"], 5, 1),
+    new Products("Twice - Mina Photobook", "./images/product-image/photo-book/twice/twice1.png", 550, "photobook", 250, [], ["./images/product-image/photo-book/twice/twice1.png"], 4, 1),
+    new Products("Twice - Nayeon Cosmopolitan", "./images/product-image/photo-book/twice/twice2.jpeg", 700, "photobook", 250, [], ["./images/product-image/photo-book/twice/twice2.jpeg"], 5, 1),
+    new Products("BTS - Photobook 2020", "./images/product-image/photo-book/bts/bts1.jpg", 300, "photobook", 250, [], ["./images/product-image/photo-book/bts/bts1.jpg"], 5, 1),
+    new Products("BTS - Photobook vol.2", "./images/product-image/photo-book/bts/bts2.jpg", 450, "photobook", 250, [], ["./images/product-image/photo-book/bts/bts2.jpg"], 5, 1),
+    new Products("Black Pink - Photobook Limited", "./images/product-image/photo-book/bp/bp1.jpg", 550, "photobook", 250, [], ["./images/product-image/photo-book/bp/bp1.jpg"], 4, 1),
+    new Products("Black Pink - Photobook Japan Edition", "./images/product-image/photo-book/bp/bp2.jpg", 460, "photobook", 250, [], ["./images/product-image/photo-book/bp/bp2.jpg"], 4, 1),
+
+    new Products("Black Pink -Light Stick", "./images/product-image/featured/featured5.jpg", 1299, "fanlight", 200, [], ["./images/product-image/featured/featured5.jpg"], 5, 1),
+    new Products("BTS- Fan Light - Map of the Soul", "./images/product-image/fanlight/bts/bts1.jpg", 2999, "fanlight", 200, [], ["./images/product-image/fanlight/bts/bts1.jpg"], 4, 1),
+    new Products("BTS- Fan Light V3", "./images/product-image/fanlight/bts/bts2.jpg", 1599, "fanlight", 200, [], ["./images/product-image/fanlight/bts/bts2.jpg"], 5, 1),
+    new Products("Twice- Fan light Candy Bong Z", "./images/product-image/fanlight/twice/twice1.jpg", 1799, "fanlight", 200, [], ["./images/product-image/fanlight/twice/twice1.jpg"], 5, 1),
+    new Products("Exo- Fan light V3 ", "./images/product-image/fanlight/exo/exo1.jpg", 1299, "fanlight", 200, [], ["./images/product-image/fanlight/exo/exo1.jpg"], 5, 1),
+    new Products("Astro- Fan light V2 ", "./images/product-image/fanlight/astro/astro1.jpg", 1199, "fanlight", 200, [], ["./images/product-image/fanlight/astro/astro1.jpg"], 4, 1),
+    new Products("Twice - Tumbler", "./images/product-image/accessories/twice/twice1.png", 799, "accessories", 250, [], ["./images/product-image/accessories/twice/twice1.png"], 5, 1),
+    new Products("Twice - Choker", "./images/product-image/accessories/twice/twice2.jpg", 399, "accessories", 250, [], ["./images/product-image/accessories/twice/twice2.jpg", "./images/product-image/merchandise/twice choke/1.png"], 5, 1),
+    new Products("Twice - Coin Purse", "./images/product-image/accessories/twice/twice3.jpg", 599, "accessories", 250, [], ["./images/product-image/accessories/twice/twice3.jpg"], 4, 1),
+    new Products("Twice - Eyeglass Pouch", "./images/product-image/accessories/twice/twice4.jpg", 799, "accessories", 250, [], ["./images/product-image/accessories/twice/twice4.jpg"], 5, 1),
+    new Products("Black Pink - Key chain", "./images/product-image/accessories/bp/bp2.jpg", 199, "accessories", 250, [], ["./images/product-image/accessories/bp/bp2.jpg"], 5, 1),
+    new Products("Black Pink - Charger Docker", "./images/product-image/accessories/bp/bp3.jpg", 499, "accessories", 250, [], ["./images/product-image/accessories/bp/bp3.jpg"], 5, 1),
+    new Products("BTS - Key Chain", "./images/product-image/accessories/bts/bts1.jpg", 199, "accessories", 250, [], ["./images/product-image/accessories/bts/bts1.jpg"], 5, 1),
+    new Products("BTS - Coin Purse", "./images/product-image/accessories/bts/bts2.jpg", 599, "accessories", 250, [
+        ["black", "red", "blue", "green", "grey"]
+    ], ["./images/product-image/accessories/bts/bts2.jpg", ], 5, 1),
+
+];
+
+
+
+$('.v-prod').click(function() {
+    $(this).addClass('prod-active');
+    $(this).siblings().removeClass('prod-active');
+    getAllProduct();
+});
+$('.add-prod').click(function() {
+    $(this).addClass('prod-active');
+    $(this).siblings().removeClass('prod-active');
+    addProduct();
+});
+
+function getAllProduct() {
+    $('.prod-admin-item').remove();
+    $('.add-products-main').hide();
+    $('.product-admin-main').slideDown('slow');
+    for (let y = 0; y < allProducts.length; y++) {
+        var it = allProducts[y];
+        $('.product-admin-main').append(
+            `
+                    <div class="prod-admin-item">
+                        <div class="prod-item">
+                            <img src="${it.image}">
+                            <div class="ad-name"><input type="text" value="${it.name}"></div>
+                            <div class="ad-price">Price ₱: <input type="text" value="${it.price}" name="p"></div>
+                            <div class="ad-type">Type: <input type="text" value="${it.type}"></div>
+                            <div class="edit">Edit</div>
+                            <div class="remove-ad-item">remove</div>
+                        </div>
+                        <div class="prod-more-info">
+                            <div class="ad-stock">Stocks: <input type="number" value="${it.stocks}"></div>
+                            <div class="vari">Variation:<input type="text" value="None"></div>
+                            <div class="make-feat">Make Feature <input type="checkbox"></div>
+                        </div>
+                    </div>
+        `);
+    }
+    $('.prod-item').click(
+        function(e) {
+            if (!$(e.target).hasClass('edit') && !$(e.target).hasClass('remove-ad-item')) {
+                $(this).parent().find('.prod-more-info').toggleClass('prod-more-show');
+            }
+        }
+    );
+    $('.edit').click(function() {
+        if (!$('.prod-admin-item input').hasClass('editable')) {
+            $('.prod-admin-item input').addClass('editable').css('pointer-events', 'all');
+            $(this).text('save');
+        } else {
+            $('.prod-admin-item input').removeClass('editable').css('pointer-events', 'none');
+            $(this).text('edit');
+        }
+    });
+
+    $('.remove-ad-item').click(function() {
+        $(this).parent().parent().hide();
+    });
+}
+
+
+function addProduct() {
+    $('.product-admin-main').hide();
+    $('.add-products-main').slideDown('slow');
+}
+
+$('.en-submit').click(function() {
+    alert('1 Product Added ');
+    window.location.reload();
+});
+
+
+$('.dash-users').click(function() {
+    $(this).addClass('dash-active');
+    $(this).siblings().removeClass('dash-active');
+    getUsers();
+});
+
+function getUsers() {
+    $('.users-admin').siblings().hide();
+    $('.users-admin').slideDown('slow');
+}
+
+$('.user-show').click(
+    function() {
+        $(this).siblings().toggleClass('u-show');
+    }
+);
+
+$('.user-delete').click(function() {
+    var n = parseInt($('.m-box-t span').text());
+    n -= 1;
+    $('.m-box-t span').text(n);
+    $(this).parent().parent().hide();
+});
+
+$('.dash-admin').click(function() {
+    $(this).siblings().removeClass('dash-active');
+    $(this).addClass('dash-active');
+    getAdmins();
+});
+
+function getAdmins() {
+    $('.admins-admin').siblings().hide();
+    $('.admins-admin').slideDown('slow');
+}
+
+$('.edit-admin').click(function() {
+    if (!$(this).parent().find('.a-inpt').hasClass('editable')) {
+        $(this).parent().find('.a-inpt').addClass('editable').css('pointer-events', 'all');
+        $(this).text('save');
+    } else {
+        $(this).parent().find('.a-inpt').removeClass('editable').css('pointer-events', 'none');
+        $(this).text('edit');
+    }
+
+});
+
+$('.add-admin').click(function() {
+    var user = $('.admins-add input[placeholder="username"]').val()
+    var pass = $('.admins-add input[placeholder="password"]').val()
+    var name = $('.admins-add input[placeholder="name"]').val()
+    var num = parseInt($('.a-box-t span').text());
+    num += 1;
+    $('.admins-body').append(
+        `
+        <div class="admins-item">
+                    <div class="admins-show">
+                            <div class="user-x"">Username: <input type="text" value="${user}" class="a-inpt"></div>
+                            <div class="user-x"">Password:<input type="password" value="${pass}" class="a-inpt"></div>
+                            <div class="user-x"">Name: ${name}</div>
+                            <div class="edit-admin">Edit</div>
+                            <div class="user-delete">Delete</div>
+                    </div>
+        </div>
+        `
+    );
+    $('.a-box-t span').text(num);
+
+});
+
+$('.user-delete').click(function() {
+    var num = parseInt($('.a-box-t span').text());
+    num -= 1;
+    $('.a-box-t span').text(num);
+    $(this).parent().hide();
+});
+
+$('.dash-out').click(function() {
+    window.location.replace("./adminLogin.html");
 });
