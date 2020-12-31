@@ -10,6 +10,7 @@ function Products(name, image, price, type, stocks, variety, gallery, rate, qty)
     this.qty = qty;
     this.mark = "f";
     this.proc = "COD";
+    this.id = 1;
 }
 
 var featured = [
@@ -919,6 +920,7 @@ if (localStorage.getItem('cards') === null) {
 }
 
 function checkOut() {
+    orderID = Math.floor(Math.random() * 10000) + 1001;
     let orders;
     var nameInfo = JSON.parse(localStorage.getItem('name'));
     var contact = JSON.parse(localStorage.getItem('phone'));
@@ -961,6 +963,7 @@ function checkOut() {
         $('input[name="n"]').attr('value', nameInfo);
         $('input[name="c"]').attr('value', contact);
         $('input[name="a"]').attr('value', address);
+        $('.order-id').text(`${orderID}`);
 
         if (selection == "Credit Card") {
             if (cards.length === 0) {
@@ -1026,6 +1029,7 @@ $('.check-confirm').click(
             if (select == "Credit Card") {
                 order.proc = "Paid";
             }
+            order.id = parseInt($('.order-id').text());
             confirmOrders.push(order);
         });
         deleteConfirmedItems();
@@ -1072,6 +1076,7 @@ function getRecieve() {
             <div class="r-price">Total Price:₱${recOrders[j].qty * recOrders[j].price}</div>
             <div class="r-qty">Qty:${recOrders[j].qty}</div>
             <div class="r-total">${recOrders[j].proc}</div>
+            <div class="r-id">OrderId:${recOrders[j].id}</div>
             <div class="r-cancel">Cancel</div>
         </div>
         `);

@@ -495,6 +495,12 @@
         flex-direction: column;
     }
     
+    footer h3 {
+        font-size: 0.8rem;
+        width: 70%;
+        margin: auto;
+    }
+    
     .footer {
         display: flex;
         width: 100%;
@@ -2200,4 +2206,21 @@
     
     .dash-out:hover {
         background-color: #8a0202;
+    }
+    
+    .s {
+        display: flex;
+    }
+    
+    .s .sear {
+        cursor: pointer;
+        font-size: 20px;
+        background-color: #CF9500;
+        transition: all 0.5s ease;
+        margin-left: 1rem;
+        padding: 0.5rem 1rem;
+    }
+    
+    .s .sear:hover {
+        background-color: #815d00;
     }
